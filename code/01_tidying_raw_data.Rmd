@@ -1,0 +1,71 @@
+---
+title: "00_tidying_raw_data"
+author: "Amel Zulji"
+date: "2021-06-23"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Environment setup
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+```
+
+```{r libraries, echo=FALSE}
+suppressWarnings({
+  library("reticulate")
+  library("SingleCellExperiment")
+  library("Seurat")
+  library("Matrix")
+})
+```
+
+# Blum
+
+```{r blum-linking-python-environment}
+use_condaenv(condaenv = "/Users/az6/opt/anaconda3/envs/egsmosco/")
+```
+
+```{python blum-loading-object}
+import scanpy as sc
+blum_full = sc.read_h5ad(filename="data/blum_full.h5ad")
+blum_full
+```
+
+```{r blum-converting-to-seurat-format}
+exprs <- t(py$blum_full$X)
+colnames(exprs) <- py$blum_full$obs_names$to_list()
+rownames(exprs) <- py$blum_full$var_names$to_list()
+
+# Create the Seurat object
+blum <- CreateSeuratObject(exprs)
+
+# Set the expression assay
+blum <- SetAssayData(blum, "data", exprs)
+
+# Add observation metadata
+blum <- AddMetaData(blum, py$blum_full$obs)
+
+# Add embedding
+embedding <- py$blum_full$obsm["X_umap"]
+rownames(embedding) <- py$blum_full$obs_names$to_list()
+colnames(embedding) <- c("UMAP_1", "UMAP_2")
+blum[["umap"]] <- CreateDimReducObject(embedding, key = "UMAP_")
+```
+
+
+```{r blum-clean-object}
+Idents(blum) <- blum$cell_type
+UMAPPlot(blum)
+new_cluster_ids <- c("MG/MP", "AS", "EC", "OL", "CHN", "IN", "EN")
+names(new_cluster_ids) <- levels(blum)
+
+blum <- RenameIdents(blum, new_cluster_ids)
+UMAPPlot(blum)
+
+blum[["cell_type_short"]] <- Idents(blum)
+UMAPPlot(blum)
+saveRDS(object = blum, file = "output/01_tidy_data/blum.rds")
+```
