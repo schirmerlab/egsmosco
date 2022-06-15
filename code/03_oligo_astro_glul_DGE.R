@@ -2,6 +2,7 @@ library(Seurat)
 library(tidyverse)
 library(patchwork)
 library(kableExtra)
+library(magick)
 
 if (!file.exists("output/03_GLUL_dge")) {
   dir.create("output/03_GLUL_dge")
@@ -185,3 +186,8 @@ ggsave(filename = "output/03_GLUL_dge/glul_dge_analysis.png",
        width = 21*3,
        height = 6.8*3,
        units = "cm")
+
+img = image_read("output/03_GLUL_dge/glul_dge_analysis.png")
+img <- image_scale(image_scale(img,"33%"))
+image_write(img, path = "images/schirmer_GLUL_dge.png", format = "png")
+
