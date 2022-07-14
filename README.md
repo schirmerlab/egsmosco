@@ -1,5 +1,5 @@
 # egsmosco 
-Supporting analysis for the paper [Evidence for glutamine synthetase function in mouse spinal cord oligodendrocytes](https://onlinelibrary.wiley.com/doi/10.1002/glia.24071)
+Supporting analysis for the paper [Evidence for glutamine synthetase function in mouse spinal cord oligodendrocytes](https://onlinelibrary.wiley.com/doi/10.1002/glia.24071).
 
 ### Figure 2 - Spinal cord GS expression is macroglial-specific.
 
