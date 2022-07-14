@@ -1,9 +1,9 @@
 # egsmosco 
-egsmosco (<u>E<u>vidence for **g**lutamine **s**ynthetase function in **mo**use **s**pinal **c**ord **o**ligodendrocytes)
+Supporting analysis for the paper [Evidence for glutamine synthetase function in mouse spinal cord oligodendrocytes](https://onlinelibrary.wiley.com/doi/10.1002/glia.24071)
 
 ### Figure 2 - Spinal cord GS expression is macroglial-specific.
 
-![alt text](https://github.com/AmelZulji/egsmosco/blob/master/images/marques.png?raw=true)
+![test](https://github.com/AmelZulji/egsmosco/blob/master/images/marques.png?raw=true)
 
 ![alt text](https://github.com/AmelZulji/egsmosco/blob/master/images/blum.png?raw=true)
 
